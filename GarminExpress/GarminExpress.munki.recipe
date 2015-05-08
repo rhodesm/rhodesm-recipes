@@ -83,6 +83,18 @@
         <dict>
             <key>Processor</key>
             <string>MunkiPkginfoMerger</string>
+            <key>Arguments</key>
+            <dict>
+                <key>additional_pkginfo</key>
+                <dict>
+                    <key>version</key>
+                    <string>%version%</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
             <key>Arguments</key>
@@ -93,6 +105,7 @@
                 <string>Garmin Express</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
+                <key>additional_pkginfo</key>
             </dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
