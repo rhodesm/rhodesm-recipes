@@ -36,6 +36,20 @@
     <array>
         <dict>
             <key>Processor</key>
+            <string>PkgRootCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                <key>pkgdirs</key>
+                <dict>
+                    <key>Applications</key>
+                    <string>0775</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
             <string>FlatPkgUnpacker</string>
             <key>Arguments</key>
             <dict>
@@ -60,14 +74,42 @@
                 <true/>
             </dict>
         </dict>
+	<dict>
+            <key>Processor</key>
+            <string>FileMover</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/temp.pkg.unpacked</string>
+                <key>target</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot/Applications/Garmin Express.app</string>
+            </dict>
+	</dict>
         <dict>
             <key>Processor</key>
             <string>Versioner</string>
             <key>Arguments</key>
             <dict>
                 <key>input_plist_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack/temp.pkg.unpacked/Contents/Info.plist</string>
+                <string>%RECIPE_CACHE_DIR%/pkgroot/Applications/Garmin Express.app/Contents/Info.plist</string>
             </dict>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>faux_root</key>
+                <string>%RECIPE_CACHE_DIR%/pkgroot</string>
+                <key>installs_item_paths</key>
+                <array>
+                    <string>/Applications/Garmin Express.app</string>
+                </array>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiPkginfoMerger</string>
         </dict>
         <dict>
             <key>Processor</key>
@@ -93,19 +135,12 @@
             </dict>
         </dict>
         <dict>
-            <key>Processor</key>
-            <string>MunkiPkginfoMerger</string>
-        </dict>
-        <dict>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
                 <string>%pathname%</string>
-                <key>munkiimport_appname</key>
-                <string>Garmin Express</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
-                <key>additional_pkginfo</key>
             </dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
